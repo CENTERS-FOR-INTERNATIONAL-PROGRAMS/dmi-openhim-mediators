@@ -9,7 +9,7 @@ import {
   fetchConfig
 } from 'openhim-mediator-utils'
 
-import mediatorConfig, { urn } from './myMediatorConfig.json';
+import mediatorConfig, { urn } from './choleraMediatorConfig.json';
 const util = require('util');
 const sql = require("msnodesqlv8");
 // const sql = require("mssql");
@@ -18,7 +18,7 @@ const fs = require('fs');
 
 // const sql = require('mssql');
 const port = 3001;
-const connectionString = "server=4VHM2T3-KEN,1433;Database=DMI_Cholera_Stagging;uid=sa;pwd=S3tpassw0rd;Driver={ODBC Driver 17 for SQL Server}";
+const connectionString = "server=172.18.0.1;Database=DMI_Cholera_Stagging;uid=sa;pwd=Xkemrcdc@123;Driver={ODBC Driver 17 for SQL Server}";
 
 const openhimConfig = {
   username: 'root@openhim.org',
@@ -29,7 +29,7 @@ const openhimConfig = {
 }
 
 const app = express();
-const query = "SELECT name FROM person";
+//const query = "SELECT name FROM person";
 
 // app.all('*', (_req, res) => {
 //   res.send('Hello World')
@@ -64,20 +64,81 @@ app.post('/saveToSql', upload.single('csvFile'), async (req, res) => {
 
     // Perform database operation (e.g., insert data)
     for (const row of results) {
-      console.log({"name": row.Name, "age": row.Age});
-
-    const insertQuery = "INSERT INTO CholeraData (PatientID, Name, Age) VALUES (@Name, @Age)";
-
-
-
-      const parameters = [
-        { name: 'Name', type: sql.NVarChar, value: "Try" },
-        { name: 'Age', type: sql.Int, value: 20 },
-      ];
-
-
+    
       const queryAsync = util.promisify(sql.query);
-      const result = await queryAsync(connectionString, `INSERT INTO CholeraData (PatientID, Name, Age) VALUES ('${row.PatientID}', '${row.Name}',${row.Age})`);
+      const result = await queryAsync(connectionString, `INSERT INTO [dbo].[Cholera] (
+        [ID_NO],
+        [PATIENT_NAME],
+        [OUT_PATIENT],
+        [IN_PATIENT],
+        [COUNTY],
+        [SUB_COUNTY],
+        [VILLAGE_TOWN_AND_NEIGHBORHOOD],
+        [WARD],
+        [NAME_OF_HEALTH_FACILITY],
+        [CONTACTTELNUMBER],
+        [SEX],
+        [AGE],
+        [DATE_SEEN_AT_HEALTH_FACILITY],
+        [DATE_OF_ONSET_OF_DISEASES],
+        [EPI_WEEK],
+        [NUMBER_OF_DOSES_OF_VACCINES],
+        [Sample_Collected_Yes_no],
+        [Date_Sample_collected],
+        [RDT_Yes_No],
+        [RDT_Results_Positive_Negative],
+        [Positive_by_RDT],
+        [CULTURE_Yes_No],
+        [Culture_Results_Positive_Negative],
+        [Positive_by_Culture2],
+        [Sero_Type],
+        [A_Alive],
+        [D_Dead],
+        [Date_of_Death],
+        [Patients_status_Admiited_Discharged_Out_Patient_Abscoded],
+        [Date_of_Discharge],
+        [More_Infor],
+        [Age_analysis],
+        [Lab_of_Diagnosis],
+        [column34],
+        [Place_of_Death_Facility_Community]
+      ) VALUES (
+       ${row.ID_NO},
+      ${row.PATIENT_NAME},
+      ${row.OUT_PATIENT},
+      ${row.IN_PATIENT},
+      ${row.COUNTY},
+      ${row.SUB_COUNTY},
+      ${row.VILLAGE_TOWN_AND_NEIGHBORHOOD},
+      ${row.WARD},
+      ${row.NAME_OF_HEALTH_FACILITY},
+      ${row.CONTACTTELNUMBER},
+      ${row.SEX},
+      ${row.AGE},
+      ${row.DATE_SEEN_AT_HEALTH_FACILITY},
+      ${row.DATE_OF_ONSET_OF_DISEASES},
+      ${row.EPI_WEEK},
+      ${row.NUMBER_OF_DOSES_OF_VACCINES},
+      ${row.Sample_Collected_Yes_no},
+      ${row.Date_Sample_collected},
+      ${row.RDT_Yes_No},
+      ${row.RDT_Results_Positive_Negative},
+      ${row.Positive_by_RDT},
+      ${row.CULTURE_Yes_No},
+      ${row.Culture_Results_Positive_Negative},
+      ${row.Positive_by_Culture2},
+      ${row.Sero_Type},
+      ${row.A_Alive},
+      ${row.D_Dead},
+      ${row.Date_of_Death},
+      ${row.Patients_status_Admiited_Discharged_Out_Patient_Abscoded},
+      ${row.Date_of_Discharge},
+      ${row.More_Infor},
+      ${row.Age_analysis},
+      ${row.Lab_of_Diagnosis},
+      ${row.column34},
+      ${row.Place_of_Death_Facility_Community}
+      )`);
     
     }
 

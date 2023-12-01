@@ -10,7 +10,7 @@
         "routes": [
           {
             "name": "MSSQL Mediator Route",
-            "host": "elvisnet",
+            "host": "cholera",
             "port": "3001",
             "primary": true,
             "type": "http"
