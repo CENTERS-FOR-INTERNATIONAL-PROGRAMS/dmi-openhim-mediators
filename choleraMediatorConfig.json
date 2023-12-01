@@ -1,0 +1,56 @@
+{
+    "urn": "urn:mediator:tutorial_mssql",
+    "version": "1.0.0",
+    "name": "MSSQL Mediator",
+    "description": "MSSQL Mediator",
+    "defaultChannelConfig": [
+      {
+        "name": "MSSQL Mediator",
+        "urlPattern": "^/saveToSql$",
+        "routes": [
+          {
+            "name": "MSSQL Mediator Route",
+            "host": "cholera",
+            "port": "3001",
+            "primary": true,
+            "type": "http"
+          }
+        ],
+        "allow": ["admin"],
+        "methods": ["GET", "POST"],
+        "type": "http"
+      }
+    ],
+    "endpoints": [
+      {
+        "name": "MSSQL Mediator Endpoint",
+        "host": "localhost",
+        "port": "3001",
+        "primary": true,
+        "type": "http"
+      }
+    ],
+    "configDefs": [
+      {
+        "param": "tutorial",
+        "displayName": "Tutorial variables",
+        "description": "Some variables to demonstrate fetching OpenHIM mediator config",
+        "type": "struct",
+        "array": false,
+        "template": [
+          {
+            "param": "variable_1",
+            "displayName": "Variable 1",
+            "description": "First Variable",
+            "type": "string"
+          },
+          {
+            "param": "variable_2",
+            "displayName": "Variable 2",
+            "description": "Second Variable",
+            "type": "string"
+          }
+        ]
+      }
+    ]
+  }
